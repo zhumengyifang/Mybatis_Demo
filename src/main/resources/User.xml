@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：命名空间，对statement的信息进行分类管理 -->
+<!-- 注意：在mapper代理时，它具有特殊及重要的作用 -->
+<mapper namespace="model">
+    <!-- 根据用户ID查询用户信息 -->
+    <!-- select：表示一个MappedStatement对象 -->
+    <!-- id：statement的唯一标示 -->
+    <!-- #{}：表示一个占位符？ -->
+    <!-- #{id}：里面的id表示输入参数的参数名称，如果该参数是简单类型，那么#{}里面的参数名称可以任意 -->
+    <!-- parameterType：输入参数的java类型 -->
+    <!-- resultType：输出结果的所映射的java类型（单条结果所对应的java类型） -->
+    <select id="findUserById" parameterType="int"
+            resultType="model.User">
+		SELECT * FROM USER WHERE id = #{id}
+	</select>
+</mapper>
