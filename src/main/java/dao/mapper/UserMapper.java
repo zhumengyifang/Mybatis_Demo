@@ -1,4 +1,4 @@
-import model.User;
+import entity;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,6 +13,8 @@ public interface UserMapper {
     void deleteUser(int id) throws IOException;
 
     void updateUser(User user) throws IOException;
+	
+	List<User> findUserList(UserQueryVo vo) throws Exception;
 
     void closeSqlSession();
 }

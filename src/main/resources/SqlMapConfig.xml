@@ -3,24 +3,37 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <!-- 优先加载 -->
+    <properties resource="db.properties">
+	    <property resource="db.username" value="root"/>
+    </properties>
+	
+	<!-- 别名设置 -->
+    <typeAliases>
+        <typeAlias type="do.mapper.User" alias="user" />
+		<!-- 自动将包下实体设置别名 例：do.mapper 包下的User 就会变为 User -->
+		<!-- <pagkage name="do.mapper"/> -->
+    </typeAliases>
+	
     <environments default="development">
         <environment id="development">
             <!-- 配置JDBC事务控制，由mybatis进行管理 -->
             <transactionManager type="JDBC"/>
             <!-- 配置数据源，采用mybatis连接池 -->
             <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.cj.jdbc.Driver" />
-                <property name="url" value="jdbc:mysql://192.168.1.105:3306/mybatisdata?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false" />
-                <property name="username" value="root" />
-                <property name="password" value="mysql123123" />
-            </dataSource>
+                <property name="driver" value="${db.driver}" />
+                <property name="url" value="${db.url}" />
+                <property name="username" value="${db.username}" />
+                <property name="password" value="${db.password}" />
+            </dataSource>	
         </environment>
     </environments>
 
-    <!-- 加载映射文件 -->
+    <!-- 加载映射文件,需要在同一个包下 -->
     <mappers>
+		<pagkage name="do.mapper"/>
         <mapper resource="User.xml" />
-        <mapper resource="UserMapper.xml" />
+        <mapper resource="do.mapper.UserMapper.xml" />
     </mappers>
 
 </configuration>

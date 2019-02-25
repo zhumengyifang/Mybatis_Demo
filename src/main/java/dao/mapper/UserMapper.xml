@@ -2,19 +2,19 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="UserMapper">
+<mapper namespace="do.entity">
 
     <select id="findUserById" parameterType="int"
-            resultType="model.User">
+            resultType="user">
 		SELECT * FROM USER WHERE id = #{id}
 	</select>
 
 	<select id="findUsersByName" parameterType="java.lang.String"
-			resultType="model.User">
+			resultType="user">
        SELECT * FROM USER WHERE username LIKE '%${value}%'
     </select>
 
-	<insert id="insertUser" parameterType="model.User">
+	<insert id="insertUser" parameterType="user">
 		<selectKey keyProperty="id" resultType="int" order="AFTER">
 			SELECT LASt_INSERT_ID()
 		</selectKey>
@@ -25,8 +25,14 @@
         DELETE FROM USER WHERE ID=#{id}
     </delete>
 
-	<update id="updateUser" parameterType="model.User">
+	<update id="updateUser" parameterType="user">
         UPDATE USER SET username=#{username},sex=#{sex},birthday=#{birthday},address=#{address} WHERE id=#{id}
     </update>
 
+	<select id="findUserList" parameterType="entity.UserQueryVo" 
+	        resultType="User"> 
+	    SELECT * FROM USER WHERE username LIKE  sex = #{user.sex} 
+	</select>
+
+	
 </mapper>

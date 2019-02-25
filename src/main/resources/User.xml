@@ -13,16 +13,16 @@
     <!-- parameterType：输入参数的java类型 -->
     <!-- resultType：输出结果的所映射的java类型（单条结果所对应的java类型） -->
     <select id="findUserById" parameterType="int"
-            resultType="model.User">
+            resultType="user">
 		SELECT * FROM USER WHERE id = #{id}
 	</select>
 
     <select id="findUsersByName" parameterType="java.lang.String"
-            resultType="model.User">
+            resultType="user">
        SELECT * FROM USER WHERE username LIKE '%${value}%'
     </select>
 
-    <insert id="insertUser" parameterType="model.User">
+    <insert id="insertUser" parameterType="user">
         <selectKey keyProperty="id" resultType="int" order="AFTER">
             SELECT LASt_INSERT_ID()
         </selectKey>
@@ -33,7 +33,7 @@
         DELETE FROM USER WHERE ID=#{id}
     </delete>
 
-    <update id="updateUser" parameterType="model.User">
+    <update id="updateUser" parameterType="user">
         UPDATE USER SET username=#{username},sex=#{sex},birthday=#{birthday},address=#{address} WHERE id=#{id}
     </update>
 </mapper>
