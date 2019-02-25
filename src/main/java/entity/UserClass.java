@@ -1,4 +1,5 @@
-import model.User;
+package entity;
+
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -8,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-public class UserClass implements UserMapper {
+public class UserClass {
 
     public UserClass() throws IOException {
         inputStream = Resources.getResourceAsStream(resource);
@@ -21,38 +22,36 @@ public class UserClass implements UserMapper {
     private final SqlSession sqlSession;
     private final String resource = "SqlMapConfig.xml";
 
-    @Override
     public User findUserById(int id) {
-        User user = sqlSession.selectOne("model.findUserById", id);
+        User user = sqlSession.selectOne("entity.findUserById", id);
         return user;
     }
 
-    @Override
     public int insertUser(User user) {
-        sqlSession.insert("model.insertUser", user);
+        sqlSession.insert("entity.insertUser", user);
         sqlSession.commit();
         return user.getId();
     }
 
-    @Override
     public void deleteUser(int id) {
-        sqlSession.delete("model.deleteUser", id);
+        sqlSession.delete("entity.deleteUser", id);
         sqlSession.commit();
     }
 
-    @Override
     public void updateUser(User user) {
-        sqlSession.update("model.updateUser", user);
+        sqlSession.update("entity.updateUser", user);
         sqlSession.commit();
     }
 
-    @Override
+    public List<User> findUserList(UserQueryVo vo) throws Exception {
+        return null;
+    }
+
     public List<User> findUsersByName(String name) {
-        List<User> users = sqlSession.selectList("model.findUsersByName", name);
+        List<User> users = sqlSession.selectList("entity.findUsersByName", name);
         return users;
     }
 
-    @Override
     public void closeSqlSession() {
         sqlSession.close();
     }

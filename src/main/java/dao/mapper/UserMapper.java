@@ -1,4 +1,7 @@
-import entity;
+package dao.mapper;
+
+import entity.User;
+import entity.UserQueryVo;
 
 import java.io.IOException;
 import java.util.List;

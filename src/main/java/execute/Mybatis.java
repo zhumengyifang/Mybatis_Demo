@@ -1,4 +1,8 @@
-import model.User;
+package execute;
+
+import dao.mapper.UserMapper;
+import entity.User;
+import entity.UserClass;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -15,7 +19,7 @@ public class Mybatis {
         userClass = new UserClass();
     }
 
-    private final UserMapper userClass;
+    private final UserClass userClass;
 
     @Test
     public void findUserById() throws Exception {
@@ -44,7 +48,7 @@ public class Mybatis {
 
     @Test
     public void deleteUser() throws IOException {
-        userClass.deleteUser(30);
+        userClass.deleteUser(31);
         userClass.closeSqlSession();
         System.out.println("删除成功!");
     }
@@ -60,22 +64,18 @@ public class Mybatis {
         System.out.println("更新成功!");
     }
 
+    /**
+     * 直接通过mapper接口
+     * @throws IOException
+     */
     @Test
     public void userMapperDemo() throws IOException{
-        //读取配置文件
-        //全局配置文件的路径
         String resource = "SqlMapConfig.xml";
         InputStream inputStream = Resources.getResourceAsStream(resource);
-
-        //创建SqlSessionFactory
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-
-        //创建SqlSession
         SqlSession sqlSession = sqlSessionFactory.openSession();
-
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-        User user = mapper.findUserById(29);
-        sqlSession.commit();
+        User user = mapper.findUserById(1);
         sqlSession.close();
         System.out.println(user.toString());
     }
