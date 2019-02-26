@@ -4,6 +4,7 @@ import entity.User;
 import entity.UserQueryVo;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 public interface UserMapper {
@@ -16,9 +17,11 @@ public interface UserMapper {
     void deleteUser(int id) throws IOException;
 
     void updateUser(User user) throws IOException;
-	
-	List<User> findUserList(UserQueryVo vo) throws Exception;
 
-    void closeSqlSession();
+    List<User> findUserList(UserQueryVo vo) throws Exception;
+
+    List<User> findUserByHashMap(HashMap hashMap) throws Exception;
+
+    User findUserRstMap(int id) throws Exception;
 }
 

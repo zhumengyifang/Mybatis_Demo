@@ -11,8 +11,6 @@
     <!-- 别名设置 -->
     <typeAliases>
         <typeAlias type="entity.User" alias="user"/>
-        <!-- 自动将包下实体设置别名 例：do.mapper 包下的User 就会变为 User -->
-        <!-- <pagkage name="do.mapper"/> -->
     </typeAliases>
 
     <environments default="development">
@@ -31,8 +29,8 @@
 
     <!-- 加载映射文件,需要在同一个包下 -->
     <mappers>
-        <!-- <package name="dao.mapper"></package> -->
-        <mapper resource="User.xml"/>
+        <package name="dao.mapper"></package>
+        <!-- <mapper resource="User.xml"/> -->
     </mappers>
 
 </configuration>

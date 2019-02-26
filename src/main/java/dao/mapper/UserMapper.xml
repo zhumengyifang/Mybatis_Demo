@@ -8,9 +8,22 @@
 		SELECT * FROM USER WHERE id = #{id}
 	</select>
 
-	<select id="findUsersByName" parameterType="java.lang.String"
-			resultType="user">
+    <select id="findUsersByName" parameterType="java.lang.String"
+            resultType="user">
        SELECT * FROM USER WHERE username LIKE '%${value}%'
+    </select>
+
+    <select id="findUserByHashMap" parameterType="hashmap" resultType="user">
+		SELECT * FROM USER WHERE username LIKE  '%${username}%'
+	</select>
+
+    <resultMap id="UserRstMap" type="user">
+        <id column="id_" property="id"></id>
+        <result column="username_" property="username"></result>
+    </resultMap>
+
+    <select id="findUserRstMap" parameterType="int" resultMap="UserRstMap">
+        SELECT id id_, username username_ FROM USER WHERE id = #{id}
     </select>
 
 </mapper>

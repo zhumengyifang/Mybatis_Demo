@@ -52,8 +52,4 @@ public class UserClass {
         return users;
     }
 
-    public void closeSqlSession() {
-        sqlSession.close();
-    }
-
 }
