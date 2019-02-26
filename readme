@@ -1,0 +1,16 @@
+数据库创建脚本
+
+CREATE DATABASE ee19_batis_day03;
+USE ee19_batis_day03;
+CREATE TABLE USER (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  username VARCHAR(32) NOT NULL COMMENT '用户名称',
+  birthday DATE DEFAULT NULL COMMENT '生日',
+  sex CHAR(1) DEFAULT NULL COMMENT '性别',
+  address VARCHAR(256) DEFAULT NULL COMMENT '地址',
+  PRIMARY KEY (id)
+) ENGINE=INNODB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+
+INSERT  INTO `user`(`id`,`username`,`birthday`,`sex`,`address`) VALUES (1,'王五',NULL,'2',NULL),(10,'张三','2014-07-10','1','北京市'),(16,'张小明',NULL,'1','河南郑州'),(22,'陈小明',NULL,'1','河南郑州'),(24,'张三丰',NULL,'1','河南郑州'),(25,'陈小明',NULL,'1','河南郑州'),(26,'王五',NULL,NULL,NULL);
+
+代码测试环境为：macbook pro intellij IDEA + VMware Linux  mysql
