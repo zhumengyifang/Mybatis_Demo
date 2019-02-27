@@ -26,4 +26,36 @@
         SELECT id id_, username username_ FROM USER WHERE id = #{id}
     </select>
 
+    <select id="findUserListByTag" parameterType="entity.UserQueryVo" resultType="user">
+        SELECT * FROM USER
+        <where>
+            <include refid="sqlFragment"></include>
+        </where>
+    </select>
+
+    <sql id="sqlFragment">
+        <if test="user != null">
+            <if test="user.username !=null and user.username!=''">
+                AND username LIKE '%${user.username}%'
+            </if>
+        </if>
+
+        <if test="user.sex !=null and user.sex!=''">
+            AND sex=#{user.sex}
+        </if>
+    </sql>
+
+    <select id="userListByIds" resultType="user">
+        SELECT * FROM USER
+        <where>
+            <if test="li != null and li.size>0">
+                AND id in
+                <foreach collection="li" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+
 </mapper>

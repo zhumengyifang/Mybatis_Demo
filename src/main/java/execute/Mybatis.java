@@ -1,8 +1,9 @@
 package execute;
 
-import dao.mapper.UserMapper;
 import entity.User;
 import entity.UserClass;
+import entity.UserQueryVo;
+import dao.mapper.UserMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -11,6 +12,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -89,11 +91,37 @@ public class Mybatis {
         List<User> users = mapper.findUserByHashMap(hashMap);
         users.forEach(p -> System.out.println(p));
     }
+
     @Test
     public void findUserRstMap() throws Exception {
-        UserMapper mapper=getUserMapper();
-        User user= mapper.findUserRstMap(1);
+        UserMapper mapper = getUserMapper();
+        User user = mapper.findUserRstMap(1);
         System.out.println(user.toString());
+    }
+
+    @Test
+    public void findUserListByTag() throws Exception {
+        UserMapper mapper = getUserMapper();
+        UserQueryVo userQueryVo = new UserQueryVo();
+        User user = new User();
+        user.setUsername("王");
+        user.setSex("2");
+        userQueryVo.setUser(user);
+
+        List<User> users = mapper.findUserListByTag(userQueryVo);
+        users.forEach(p -> System.out.println(p.toString()));
+    }
+
+    @Test
+    public void userListByIds() throws Exception {
+        UserMapper mapper = getUserMapper();
+        List<Integer> ids = new ArrayList<>();
+        ids.add(1);
+        ids.add(2);
+        ids.add(3);
+        ids.add(28);
+        List<User> users = mapper.userListByIds(ids);
+        users.forEach(p -> System.out.println(p.toString()));
     }
 
 }

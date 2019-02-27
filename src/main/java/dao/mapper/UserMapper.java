@@ -2,6 +2,7 @@ package dao.mapper;
 
 import entity.User;
 import entity.UserQueryVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -23,5 +24,9 @@ public interface UserMapper {
     List<User> findUserByHashMap(HashMap hashMap) throws Exception;
 
     User findUserRstMap(int id) throws Exception;
+
+    List<User> findUserListByTag(UserQueryVo vo) throws Exception;
+
+    List<User> userListByIds(@Param("li") List<Integer> list) throws Exception;
 }
 
