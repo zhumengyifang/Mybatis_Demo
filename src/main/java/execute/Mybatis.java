@@ -123,5 +123,20 @@ public class Mybatis {
         List<User> users = mapper.userListByIds(ids);
         users.forEach(p -> System.out.println(p.toString()));
     }
+	
+	@Test 
+	public void testFindOrderAndUser() throws Exception 
+	{ //读取配置文件 
+	//全局配置文件的路径 
+	String resource = "SqlMapConfig.xml"; 
+	InputStream inputStream = Resources.getResourceAsStream(resource); 
+	//创建SqlSessionFactory 
+	SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream); 
+	//创建SqlSession 
+	SqlSession sqlSession = sqlSessionFactory.openSession(); 
+	CacheMapper mapper = sqlSession.getMapper(CacheMapper.class); 
+	List<OrdersExt> orderAndLazyLoading = mapper.findOrderAndLazyLoading(); 
+	sqlSession.close(); }
+
 
 }
