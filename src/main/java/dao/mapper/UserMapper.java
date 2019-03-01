@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface UserMapper {
+
     List<User> findUsersByName(String name) throws IOException;
 
     User findUserById(int id) throws IOException;

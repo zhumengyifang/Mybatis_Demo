@@ -5,10 +5,8 @@ import entity.OrdersExt;
 
 import java.util.List;
 
-public interface OrdersExtMapper {
-
+public interface OrdersMapper {
     List<OrdersExt> findOrderAndUser();
 
     List<OrderMapExt> findOrderAndUserRstMap();
 }
-

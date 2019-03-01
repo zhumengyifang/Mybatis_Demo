@@ -1,24 +1,20 @@
 package execute;
 
+import dao.mapper.UserMapper;
 import entity.User;
 import entity.UserClass;
 import entity.UserQueryVo;
-import dao.mapper.UserMapper;
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Mybatis {
+public class UserExecute extends MapperClass {
 
-    public Mybatis() throws IOException {
+    //需要修改SqlMapConfig.xml的mappers才可以使用
+    public UserExecute() throws IOException {
         userClass = new UserClass();
     }
 
@@ -63,14 +59,6 @@ public class Mybatis {
     }
 
 
-    private UserMapper getUserMapper() throws IOException {
-        String resource = "SqlMapConfig.xml";
-        InputStream inputStream = Resources.getResourceAsStream(resource);
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        return sqlSession.getMapper(UserMapper.class);
-    }
-
     /**
      * 直接通过mapper接口
      *
@@ -78,14 +66,14 @@ public class Mybatis {
      */
     @Test
     public void userMapperDemo() throws IOException {
-        UserMapper mapper = getUserMapper();
+        UserMapper mapper = getMapper(UserMapper.class);
         User user = mapper.findUserById(1);
         System.out.println(user.toString());
     }
 
     @Test
     public void findByHashMap() throws Exception {
-        UserMapper mapper = getUserMapper();
+        UserMapper mapper = getMapper(UserMapper.class);
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("username", "王");
         List<User> users = mapper.findUserByHashMap(hashMap);
@@ -94,14 +82,14 @@ public class Mybatis {
 
     @Test
     public void findUserRstMap() throws Exception {
-        UserMapper mapper = getUserMapper();
+        UserMapper mapper = getMapper(UserMapper.class);
         User user = mapper.findUserRstMap(1);
         System.out.println(user.toString());
     }
 
     @Test
     public void findUserListByTag() throws Exception {
-        UserMapper mapper = getUserMapper();
+        UserMapper mapper = getMapper(UserMapper.class);
         UserQueryVo userQueryVo = new UserQueryVo();
         User user = new User();
         user.setUsername("王");
@@ -114,7 +102,7 @@ public class Mybatis {
 
     @Test
     public void userListByIds() throws Exception {
-        UserMapper mapper = getUserMapper();
+        UserMapper mapper = getMapper(UserMapper.class);
         List<Integer> ids = new ArrayList<>();
         ids.add(1);
         ids.add(2);
@@ -123,20 +111,4 @@ public class Mybatis {
         List<User> users = mapper.userListByIds(ids);
         users.forEach(p -> System.out.println(p.toString()));
     }
-	
-	@Test 
-	public void testFindOrderAndUser() throws Exception 
-	{ //读取配置文件 
-	//全局配置文件的路径 
-	String resource = "SqlMapConfig.xml"; 
-	InputStream inputStream = Resources.getResourceAsStream(resource); 
-	//创建SqlSessionFactory 
-	SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream); 
-	//创建SqlSession 
-	SqlSession sqlSession = sqlSessionFactory.openSession(); 
-	CacheMapper mapper = sqlSession.getMapper(CacheMapper.class); 
-	List<OrdersExt> orderAndLazyLoading = mapper.findOrderAndLazyLoading(); 
-	sqlSession.close(); }
-
-
 }
