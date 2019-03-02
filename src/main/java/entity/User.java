@@ -1,17 +1,14 @@
 package entity;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class User implements Serializable {
+public class User {
     private int id;
     private String username;
     private Date birthday;
     private String address;
     private String sex;
-    private List<Orders> ordersList;
-
 
     public int getId() {
         return id;
@@ -62,13 +59,5 @@ public class User implements Serializable {
                 ", address='" + address + '\'' +
                 ", sex='" + sex + '\'' +
                 '}';
-    }
-
-    public List<Orders> getOrdersList() {
-        return ordersList;
-    }
-
-    public void setOrdersList(List<Orders> ordersList) {
-        this.ordersList = ordersList;
     }
 }

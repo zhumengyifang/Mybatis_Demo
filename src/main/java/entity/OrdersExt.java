@@ -1,9 +1,6 @@
 package entity;
 
-import java.awt.*;
-import java.io.Serializable;
-
-public class OrdersExt extends Orders implements Serializable {
+public class OrdersExt extends Orders {
     private String username;
 
     private String sex;

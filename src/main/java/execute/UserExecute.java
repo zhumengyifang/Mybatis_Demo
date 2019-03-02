@@ -4,14 +4,9 @@ import dao.mapper.UserMapper;
 import entity.User;
 import entity.UserClass;
 import entity.UserQueryVo;
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -72,21 +67,11 @@ public class UserExecute extends MapperClass {
      */
     @Test
     public void userMapperDemo() throws IOException {
-
-        InputStream inputStream = Resources.getResourceAsStream(resource);
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-        SqlSession sqlSession1 = sqlSessionFactory.openSession();
-        SqlSession sqlSession2 = sqlSessionFactory.openSession();
-        UserMapper mapper1 = sqlSession1.getMapper(UserMapper.class);
-        User user1 = mapper1.findUserById(1);
-        System.out.println(user1.toString());
-        sqlSession1.close();
-        //在sqlSession1 close()的时候将缓存保存; 在此过程中有修改动作也就是commit操作会清空缓存
-        UserMapper mapper2 = sqlSession2.getMapper(UserMapper.class);
-        //查询缓存具体查看DEBUG打印的 Cache Hit Ratio [dao.mapper.UserMapper]: 0.5 为 0则未命中缓存
-        User user2 = mapper2.findUserById(1);
-        System.out.println(user2.toString());
-        sqlSession2.close();
+        UserMapper mapper = getMapper(UserMapper.class);
+        User user = mapper.findUserById(1);
+        System.out.println(user.toString());
+        user = mapper.findUserById(1);
+        System.out.println(user.toString());
     }
 
     @Test
