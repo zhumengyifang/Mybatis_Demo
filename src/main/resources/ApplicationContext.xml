@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+
+    <!-- 加载java的配置文件 -->
+    <context:property-placeholder location="db.properties"/>
+
+    <!-- 创建数据源 -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${db.driver}"/>
+        <property name="url" value="${db.url}"/>
+        <property name="username" value="${db.username}"/>
+        <property name="password" value="${db.password}"/>
+        <property name="maxActive" value="10"/>
+        <property name="maxIdle" value="5"/>
+    </bean>
+
+    <!-- SqlSessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="configLocation" value="classpath:SqlMapConfig.xml"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 指定扫描的包名
+             如果扫描多个包，每个包中间使用半角逗号分隔
+          -->
+        <property name="basePackage" value="dao.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+
+    <!--&lt;!&ndash; 数据库连接信息的配置文件 &ndash;&gt;-->
+    <!--<context:property-placeholder-->
+            <!--location="classpath:database.properties" />-->
+
+
+    <!--&lt;!&ndash; 数据库连接池 &ndash;&gt;-->
+    <!--<bean id="dataSource"-->
+          <!--class="com.alibaba.druid.pool.DruidDataSource"-->
+          <!--p:driverClassName="${jdbc.driver}" p:url="${jdbc.url}"-->
+          <!--p:username="${jdbc.username}" p:password="${jdbc.password}"-->
+          <!--destroy-method="close" />-->
+
+    <!--&lt;!&ndash; 引入事务的配置 &ndash;&gt;-->
+    <!--<tx:annotation-driven-->
+            <!--transaction-manager="transactionManager" />-->
+    <!--<bean id="transactionManager"-->
+          <!--class="org.springframework.jdbc.datasource.DataSourceTransactionManager"-->
+          <!--p:dataSource-ref="dataSource"></bean>-->
+
+    <!--&lt;!&ndash; 整合 mybatis &ndash;&gt;-->
+    <!--<bean id="sqlSessionFactory"-->
+          <!--class="org.mybatis.spring.SqlSessionFactoryBean"-->
+          <!--p:dataSource-ref="dataSource"-->
+          <!--p:mapperLocations="classpath:com/lanou/mapper/*.xml" />-->
+
+    <!--&lt;!&ndash; 初始化数据库，是否在服务启动时执行schema.sql &ndash;&gt;-->
+    <!--<jdbc:initialize-database enabled="false">-->
+        <!--<jdbc:script location="classpath:database/schema.sql" />-->
+    <!--</jdbc:initialize-database>-->
+
+    <!--&lt;!&ndash;  mybatis自动扫描 将Mapper接口生成代理注入到Spring &ndash;&gt;-->
+    <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"-->
+          <!--p:sqlSessionFactoryBeanName="sqlSessionFactory"-->
+          <!--p:basePackage="com.lanou.dao" />-->
+
+    <!--&lt;!&ndash; spring自动扫描：扫描用Service，和Repository注解申明的受管bean &ndash;&gt;-->
+    <!--<context:component-scan-->
+            <!--base-package="com.lanou.biz">-->
+        <!--<context:include-filter type="annotation"-->
+                                <!--expression="org.springframework.stereotype.Service" />-->
+    <!--</context:component-scan>-->
+    <!--<context:component-scan-->
+            <!--base-package="com.lanou.dao">-->
+        <!--<context:include-filter type="annotation"-->
+                                <!--expression="org.springframework.stereotype.Repository" />-->
+    <!--</context:component-scan>-->
+
+</beans>
