@@ -6,13 +6,13 @@ public class OrderMapExt extends Orders {
     private String username;
     private String sex;
     private User user;
-    private List<OrderDeteil> orderdetails;
+    private List<OrderDetail> orderdetails;
 
-    public List<OrderDeteil> getOrderdetails() {
+    public List<OrderDetail> getOrderdetails() {
         return orderdetails;
     }
 
-    public void setOrderdetails(List<OrderDeteil> orderdetails) {
+    public void setOrderdetails(List<OrderDetail> orderdetails) {
         this.orderdetails = orderdetails;
     }
 

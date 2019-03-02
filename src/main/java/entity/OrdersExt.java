@@ -1,9 +1,14 @@
 package entity;
 
-public class OrdersExt extends Orders {
+import java.awt.*;
+import java.io.Serializable;
+
+public class OrdersExt extends Orders implements Serializable {
     private String username;
 
     private String sex;
+
+    private User user;
 
     public String getUsername() {
         return username;
@@ -23,6 +28,14 @@ public class OrdersExt extends Orders {
 
     @Override
     public String toString() {
-        return "OrdersExt{" + "username='" + username + '\'' + ", sex='" + sex + '\'' + '}';
+        return "id:" + getId() + ",user_id:" + getUserId() + ",number:" + getNumber() + "," + user.toString();
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

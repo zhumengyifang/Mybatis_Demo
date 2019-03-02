@@ -40,4 +40,56 @@
 
     </select>
 
+
+    <resultMap id="OrdersAndItemsRstMap" type="entity.User">
+        <!-- 用户信息 -->
+        <!-- 左边是表的名称，记住 -->
+        <!-- 虽然查询的列没有user_id，但是是唯一主键，还是需要写，
+             它最后赋值给entity.User 里面的id -->
+        <id column="user_id" property="id"></id>
+        <result column="username" property="username"></result>
+        <result column="sex" property="sex"></result>
+        <!-- 订单信息 一个用户，对应多个订单  一对多-->
+        <collection property="ordersList" ofType="entity.Orders">
+            <id column="id" property="id"></id>
+            <result column="user_id" property="userId"></result>
+            <result column="number" property="number"></result>
+
+            <!-- 订单详情信息 一个订单里面有多个订单详情  一对多-->
+            <collection property="orderDetailList" ofType="entity.OrderDetail">
+                <id column="orderdetailId" property="id"></id>
+                <result column="items_id" property="itemsId"></result>
+                <result column="items_num" property="itemsNum"></result>
+                <!-- 商品信息 每个订单详情里面有一个商品信息  一对一 -->
+                <association property="items" javaType="entity.Items">
+                    <!-- 虽然查询的列没有items_id，但是是唯一主键，还是需要写，
+                         它最后赋值给entity.Items 里面的id -->
+                    <id column="items_id" property="id"></id>
+                    <result column="name" property="name"></result>
+                    <result column="price" property="price"></result>
+                </association>
+            </collection>
+        </collection>
+    </resultMap>
+    <select id="findOrdersAndItemsRstMap" resultMap="OrdersAndItemsRstMap">
+            SELECT
+              orders.id,
+              orders.user_id,
+              orders.number,
+              USER.username,
+              USER.sex,
+              orderdetail.id  orderdetailId,
+              orderdetail.items_id,
+              orderdetail.items_num,
+              items.name,
+              items.price
+            FROM orders,
+              USER,
+              orderdetail,
+              items
+            WHERE orders.user_id = USER.id
+                AND orders.id = orderdetail.orders_id
+                AND orderdetail.items_id = items.id
+    </select>
+
 </mapper>

@@ -1,10 +1,11 @@
 package entity;
 
-public class OrderDeteil {
+public class OrderDetail {
     private Integer id;
     private Integer ordersId;
     private Integer itemsId;
     private Integer itemsNum;
+    private Items items;
 
     public Integer getId() {
         return id;
@@ -41,5 +42,13 @@ public class OrderDeteil {
     @Override
     public String toString() {
         return "Orderdetail [id=" + id + ", ordersId=" + ordersId + ", itemsId=" + itemsId + ", itemsNum=" + itemsNum + "]";
+    }
+
+    public Items getItems() {
+        return items;
+    }
+
+    public void setItems(Items items) {
+        this.items = items;
     }
 }

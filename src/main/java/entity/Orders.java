@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class Orders {
     private Integer id;
@@ -8,6 +9,7 @@ public class Orders {
     private String number;
     private Date createtime;
     private String note;
+    private List<OrderDetail> orderDetailList;
 
     public Integer getId() {
         return id;
@@ -52,5 +54,13 @@ public class Orders {
     @Override
     public String toString() {
         return "Orders{" + "id=" + id + ", userId=" + userId + ", number='" + number + '\'' + ", createtime=" + createtime + ", note='" + note + '\'' + '}';
+    }
+
+    public List<OrderDetail> getOrderDetailList() {
+        return orderDetailList;
+    }
+
+    public void setOrderDetailList(List<OrderDetail> orderDetailList) {
+        this.orderDetailList = orderDetailList;
     }
 }

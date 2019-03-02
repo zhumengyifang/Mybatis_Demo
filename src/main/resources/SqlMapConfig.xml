@@ -8,16 +8,24 @@
         <property name="db.username" value="root"/>
     </properties>
 
+    <!-- settings放置位置要放在上面不然会报错-->
+    <settings>
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <!-- useCache 为是否使用缓存 注：只有在程序中有过提交操作才可以刷新缓存若手动修改数据库内容则可能导致脏读
+         , flushCache 为是否刷新缓存
+         需要在Mapper.xml里添加<Cache/>
+         缓存的对象需要可序列化
+
+         缓存导致出现无法分布式，所以需要分布式缓存
+         -->
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+
     <!-- 别名设置 -->
     <typeAliases>
         <typeAlias type="entity.User" alias="user"/>
     </typeAliases>
-
-    <!--  <settings>
-    <setting name="lazyLoadingEnabled" value="true"/>
-        <setting name="aggressiveLazyLoading" value="false"></setting>
-        <setting name="cacheEnabled" value="true"/>
-    <settings/> -->
 
     <environments default="development">
         <environment id="development">
